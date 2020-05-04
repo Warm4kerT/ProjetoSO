@@ -1,10 +1,12 @@
 package app;
 
-public class Process {
+import java.io.Serializable;
+
+public class PCB implements Serializable {
     private int pid, ppid, priority, start, PC, state;
     private String nome;
 
-    public Process(int a, int b, int c, int d, int e, int f, String n){
+    public PCB(int a, int b, int c, int d, int e, int f, String n){
         this.pid=a;
         this.ppid=b;
         this.priority=c;
@@ -14,7 +16,7 @@ public class Process {
         this.nome=n;
     }
 
-    public Process(){
+    public PCB(){
         this.pid=0;
         this.ppid=0;
         this.priority=0;
@@ -80,5 +82,10 @@ public class Process {
 
     public void setNome(String x){
         this.nome=x;
+    }
+
+    @Override
+    public String toString(){
+        return "Process Name: "+this.nome+"\nProcess ID: "+this.pid+"\nParent Process ID: "+this.ppid+"\nState: "+this.state+"\n";
     }
 }

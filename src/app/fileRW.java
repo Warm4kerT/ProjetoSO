@@ -3,17 +3,19 @@ import java.io.*;
 import java.util.*;
 
 public class fileRW {
-    public static ArrayList<Process> readF(String path){
+    public static ArrayList<PCB> readF(String path){
         try{
             ObjectInputStream input=new ObjectInputStream(new FileInputStream(path));
-            return (ArrayList<Process>) input.readObject();   
+            ArrayList<PCB> retorna=(ArrayList<PCB>) input.readObject();
+            input.close();
+            return retorna;      
         }catch(IOException | ClassNotFoundException e){
             System.out.println(e.getMessage());
-            return new ArrayList<Process>();
+            return new ArrayList<PCB>();
         }
     }
 
-    public static void writeF(String path, ArrayList<Process> lista){
+    public static void writeF(String path, ArrayList<PCB> lista){
         try{
             ObjectOutputStream output=new ObjectOutputStream(new FileOutputStream(path));
             output.writeObject(lista);
@@ -23,5 +25,11 @@ public class fileRW {
             System.out.println(e.getMessage());
         }
         
+    }
+
+    public static void printList(ArrayList<PCB> list){
+        for(PCB aux:list){
+            System.out.println(aux.toString());
+        }
     }
 }
