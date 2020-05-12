@@ -1,8 +1,6 @@
 package app;
 
-import java.io.Serializable;
-
-public class PCB implements Serializable {
+public class PCB {
     private int pid, ppid, priority, start, PC, state;
     private String nome;
 
