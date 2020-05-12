@@ -5,13 +5,13 @@ public class Memory {
     private String ins, nome;
     private int n;
 
-    private Memory(String a, int b, String nome){
+    public Memory(String a, int b, String nome){
         this.ins=a;
         this.n=b;
         this.nome=nome;
     }
 
-    private Memory(){
+    public Memory(){
         this.ins="";
         this.n=0;
         this.nome="";
@@ -38,8 +38,13 @@ public class Memory {
     public String getNome() {
         return nome;
     }
-    
+
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public String toString() {
+        return "Instrução: "+this.ins+"\nVariável: "+this.n+"\nNome: "+this.nome+"\n";
     }
 }
