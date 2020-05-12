@@ -4,6 +4,13 @@ import java.util.*;
 
 
 public class fileRW {
+    public static int sTi(String s){
+        try{
+            return Integer.parseInt(s);
+        }catch(NumberFormatException e){
+            return 0;
+        }
+    }
 
     public static ArrayList<?> readF(String path){
         ArrayList<Memory> mList=new ArrayList<>();
@@ -16,16 +23,15 @@ public class fileRW {
                 if(!line.equals("\n") && !line.equals(" ")){
                     if(line.contains(" ")){
                         String[] parts=line.split(" ");
-                        Memory aux=new Memory(parts[0], new Integer(parts[1]), parts[2]);
+                        Memory aux=new Memory(parts[0], sTi(parts[1]), parts[2]);
                         mList.add(aux);
                     }else{
                         if(line.contains("  ")){
                             String[] parts=line.split("  ");
                             PCB aux=new PCB();
                             aux.setNome(parts[0]);
-                            aux.setStart(new Integer(parts[1]));
+                            aux.setStart(sTi(parts[1]));
                             pList.add(aux);
-                            
                         }
                     }
                 }
@@ -39,7 +45,7 @@ public class fileRW {
             }else{
                 return pList;
             }
-
+            
         }catch(IOException e){
             System.out.println(e.getMessage());
 
