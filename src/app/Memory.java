@@ -1,7 +1,7 @@
 package app;
 
 
-public class Memory {
+public class Memory{
     private String ins, nome;
     private int n;
 
@@ -9,6 +9,12 @@ public class Memory {
         this.ins=a;
         this.n=b;
         this.nome=nome;
+    }
+
+    public Memory(String a, int b){
+        this.ins=a;
+        this.n=b;
+        this.nome="";
     }
 
     public Memory(){
@@ -45,6 +51,6 @@ public class Memory {
 
     @Override
     public String toString() {
-        return "Instrução: "+this.ins+"\nVariável: "+this.n+"\nNome: "+this.nome+"\n";
+        return ins+"_"+n+"_"+nome;
     }
 }
