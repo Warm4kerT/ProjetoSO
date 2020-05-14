@@ -1,7 +1,6 @@
 package app;
 import java.io.*;
 import java.util.*;
-import java.lang.*;
 
 public class fileRW {
     public static int sTi(final String s) {
