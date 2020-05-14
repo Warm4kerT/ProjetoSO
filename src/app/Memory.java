@@ -51,6 +51,6 @@ public class Memory{
 
     @Override
     public String toString() {
-        return ins+"_"+n+"_"+nome;
+        return ins+" "+n+" "+nome;
     }
 }

@@ -2,6 +2,7 @@ package app;
 import java.io.*;
 import java.util.*;
 
+
 public class fileRW {
     public static int sTi(final String s) {
         try {
@@ -18,16 +19,15 @@ public class fileRW {
             final BufferedReader buff = new BufferedReader(new FileReader(path));
             String line;
             while ((line = buff.readLine()) != null) {
-                if (!line.equals("\n") && !line.equals(" ")) {
-                    if (line.contains(" ")) {
-                        String[] parts = line.split(" ", 3);
-                        if (parts.length < 3) {
-                            String[] space ={parts[0], parts[1], "null"};
-                            parts=space;
-                        }
-                        Memory aux=new Memory(parts[0],sTi(parts[1]),parts[2]); 
-                        mList.add(aux);
+                if (!line.equals("\n") && !line.equals(" ") && line.contains(" ")) {
+                    String[] parts=line.split(" ");
+                    String[] imp={parts[0], parts[1], ""};
+                    if (sTi(imp[1])==0){
+                        imp[2] = parts[1];
+                        imp[1] = "0";
                     }
+                    Memory aux=new Memory(imp[0], sTi(imp[1]), imp[2]);    
+                    mList.add(aux);
                 }
             }
             if (buff != null) {

@@ -8,6 +8,7 @@ public class App {
     public static void main(String[] args){ 
         ArrayList<PCB> PcbTabela=new ArrayList<>();
         ArrayList<Memory> memo=new ArrayList<>();
+        Global var=new Global();
         PcbTabela=fileRW.readPCB("soproject/input/plan.txt"); 
         
         for(PCB aux:PcbTabela){
@@ -16,7 +17,10 @@ public class App {
             memo=fileRW.readMem("soproject/input/"+aux.getNome());
             for(Memory aux1:memo){
                 System.out.println(aux1.toString());
+                var.intrucao(aux1);
+                System.out.println(var.getVar());
             }
+            System.out.println("\n");
         }
        
     }
