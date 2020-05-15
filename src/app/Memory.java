@@ -1,6 +1,5 @@
 package app;
 
-
 public class Memory{
     private String ins, nome;
     private int n;
