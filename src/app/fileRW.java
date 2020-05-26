@@ -60,14 +60,13 @@ public class fileRW {
                         final String[] parts = line.split("  ");
                         final PCB aux = new PCB();
                         aux.setNome(parts[0]);
-                        aux.setStart(sTi(parts[1]));
+                        aux.setArrivalTime(sTi(parts[1]));
                         pList.add(aux);
                     }
                 }
             }
             if (buff != null) {
                 buff.close();
-                ;
             }
 
             if (!pList.isEmpty()) {

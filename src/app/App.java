@@ -7,16 +7,13 @@ public class App {
 
     public static void main(String[] args){ 
         ArrayList<PCB> PcbTabela=new ArrayList<>();
-        ArrayList<Memory> memo=new ArrayList<>();
-        PcbTabela=fileRW.readPCB("soproject/input/plan.txt"); 
+        PcbTabela=fileRW.readPCB("input/plan.txt"); 
         
         for(PCB aux:PcbTabela){
             System.out.println(aux.toString());
             
-            memo=fileRW.readMem("soproject/input/"+aux.getNome());
-            for(Memory aux1:memo){
-                System.out.println(aux1.toString());
-            }
+            Comp memory=new Comp(fileRW.readMem("input/"+aux.getNome()));
+            memory.compute();
             System.out.println("\n");
         }
        
