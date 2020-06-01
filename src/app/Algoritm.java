@@ -1,7 +1,20 @@
 package app;
 
+import java.util.ArrayList;
+
 public class Algoritm {
-    public void FCFS(PCB[] p){
+
+    public static PCB[] convert(ArrayList<PCB> array){
+        PCB[] output=new PCB[array.size()];
+        int i=0;
+        for(PCB aux:array){
+            output[i]=aux;
+            i++;
+        }
+        return output;
+    }
+
+    public static void FCFS(PCB[] p){
         PCB temp=new PCB();
         int tam=p.length;
 
@@ -14,5 +27,16 @@ public class Algoritm {
                 }
             }
         }
+        for(PCB aux:p){
+            Comp.compute(fileRW.readMem("input/"+aux.getNome()));
+        }
+    }
+
+    public static void SJF(PCB[] p){
+
+    }
+    
+    public static void SRT(PCB[] p){
+        
     }
 }

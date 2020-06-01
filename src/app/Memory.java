@@ -41,7 +41,7 @@ public class Memory{
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public void setNome(String nome) {
@@ -50,6 +50,6 @@ public class Memory{
 
     @Override
     public String toString() {
-        return ins+" "+n+" "+nome;
+        return this.ins+" "+this.n+" "+this.nome;
     }
 }

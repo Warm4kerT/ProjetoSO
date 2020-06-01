@@ -10,6 +10,7 @@ public class read {
         }catch(IOException e){
             System.out.println("Error reading the input flux!!!\n");
         }
+        System.out.println("\n");
         return s;
     }
     

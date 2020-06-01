@@ -32,7 +32,6 @@ public class fileRW {
             }
             if (buff != null) {
                 buff.close();
-                ;
             }
 
             if (!mList.isEmpty()) {
@@ -56,11 +55,12 @@ public class fileRW {
             String line;
             while ((line = buff.readLine()) != null) {
                 if (!line.equals("\n") && !line.equals(" ")) {
-                    if (line.contains("  ")) {
-                        final String[] parts = line.split("  ");
+                    if (line.contains(" ")) {
+                        final String[] parts = line.split(" ");
                         final PCB aux = new PCB();
                         aux.setNome(parts[0]);
                         aux.setArrivalTime(sTi(parts[1]));
+                        aux.setPC(pList.size()-1);
                         pList.add(aux);
                     }
                 }
