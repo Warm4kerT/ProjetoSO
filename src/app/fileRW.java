@@ -61,6 +61,8 @@ public class fileRW {
                         aux.setNome(parts[0]);
                         aux.setArrivalTime(sTi(parts[1]));
                         aux.setPC(pList.size()-1);
+                        aux.setBurstTime(sTi(parts[2]));
+                        aux.setWaitingTime(sTi(parts[3]));
                         pList.add(aux);
                     }
                 }

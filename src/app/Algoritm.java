@@ -30,6 +30,22 @@ public class Algoritm {
         for(PCB aux:p){
             Comp.compute(fileRW.readMem("input/"+aux.getNome()));
         }
+
+        int[] waitingTime=new int[tam]; waitingTime[0]=0;
+        int[] turnAround=new int[tam]; turnAround[0]=p[0].getBurstTime();
+
+        for (int i=1; i<tam; i++){
+            waitingTime[i] = p[i-1].getBurstTime() + waitingTime[i-1] - p[i].getArrivalTime();
+            turnAround[i] = waitingTime[i] + p[i].getBurstTime();
+        }
+
+        int totalW = 0, totalT = 0;
+        for (int i=0; i<tam; i++){
+            totalW += waitingTime[i];
+            totalT += turnAround[i];
+        }
+
+        System.out.print("Average waiting time is " + totalW/tam + "\n" + "Average turn around time is " + totalT/tam + "\n");
     }
 
     public static void SJF(PCB[] p){
