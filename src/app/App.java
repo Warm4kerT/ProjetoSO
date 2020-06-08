@@ -16,7 +16,7 @@ public class App {
         int input=0;
         while(input!=10){
             System.out.println(":: Menu ::");
-            System.out.println("1- FCFS\n2- SJF\n3- SRT\n\n10-Exit");
+            System.out.println("1- FCFS\n2- SJF\n3- SRT\n4- Priority\n\n10-Exit");
             input=read.aInt();
             switch(input){
                 case 1:
@@ -26,10 +26,16 @@ public class App {
                 break;
                 case 2:
                     System.out.println(":: SJF ::");
+                    Algoritm.SJF(Algoritm.convert(PcbTabela));
                     System.out.println(":: End ::\n");
                 break;
                 case 3:
                     System.out.println(":: SRT ::");
+                    System.out.println(":: End ::\n");
+                break;
+                case 4:
+                    System.out.println(":: Priority ::");
+                    Algoritm.Priority(Algoritm.convert(PcbTabela));
                     System.out.println(":: End ::\n");
                 break;
             }

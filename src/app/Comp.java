@@ -30,7 +30,7 @@ public class Comp{
                 break loop;
 
             }
-            System.out.println("Iteração: "+i+"\tValor: "+var+"\tIteração: "+aux.getIns()+"\tFile: "+aux.getNome());
+            //System.out.println("Iteração: "+i+"\tValor: "+var+"\tIteração: "+aux.getIns()+"\tFile: "+aux.getNome());
         }
     }
 }

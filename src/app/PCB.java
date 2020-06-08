@@ -1,6 +1,8 @@
 package app;
 
-public class PCB {
+import java.util.*;
+
+public class PCB{
     private int pid, ppid, priority, burstTime, arrivalTime, waitingTime, PC, state;
     private String nome;
 
@@ -108,3 +110,24 @@ public class PCB {
         this.waitingTime = waitingTime;
     }
 }
+
+class Sortbyarrival implements Comparator<PCB>{
+
+    public int compare(PCB a, PCB b){ 
+        return a.getArrivalTime() - b.getArrivalTime(); 
+    } 
+}
+
+class Sortbyburst implements Comparator<PCB> { 
+    
+    public int compare(PCB a, PCB b){ 
+        return a.getBurstTime() - b.getBurstTime(); 
+    } 
+} 
+
+class Sortbypriority implements Comparator<PCB>{ 
+    
+    public int compare(PCB a, PCB b){ 
+        return a.getPriority() - b.getPriority(); 
+    } 
+} 

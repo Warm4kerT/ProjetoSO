@@ -59,10 +59,12 @@ public class fileRW {
                         final String[] parts = line.split(" ");
                         final PCB aux = new PCB();
                         aux.setNome(parts[0]);
-                        aux.setArrivalTime(sTi(parts[1]));
+                        aux.setPid(sTi(parts[1]));
+                        aux.setArrivalTime(sTi(parts[2]));
                         aux.setPC(pList.size()-1);
-                        aux.setBurstTime(sTi(parts[2]));
-                        aux.setWaitingTime(sTi(parts[3]));
+                        aux.setBurstTime(sTi(parts[3]));
+                        aux.setWaitingTime(sTi(parts[4]));
+                        aux.setPriority(sTi(parts[5]));
                         pList.add(aux);
                     }
                 }
