@@ -21,21 +21,22 @@ public class App {
             switch(input){
                 case 1:
                     System.out.println(":: FCFS ::");
-                    Algoritm.FCFS(Algoritm.convert(PcbTabela));
+                    Algoritm.FCFS(Algoritm.convertP(PcbTabela));
                     System.out.println(":: End ::\n");
                 break;
                 case 2:
                     System.out.println(":: SJF ::");
-                    Algoritm.SJF(Algoritm.convert(PcbTabela));
+                    Algoritm.SJF(Algoritm.convertP(PcbTabela));
                     System.out.println(":: End ::\n");
                 break;
                 case 3:
                     System.out.println(":: SRT ::");
+                    Algoritm.SRT(Algoritm.convertP(PcbTabela));
                     System.out.println(":: End ::\n");
                 break;
                 case 4:
                     System.out.println(":: Priority ::");
-                    Algoritm.Priority(Algoritm.convert(PcbTabela));
+                    Algoritm.Priority(Algoritm.convertP(PcbTabela));
                     System.out.println(":: End ::\n");
                 break;
             }
