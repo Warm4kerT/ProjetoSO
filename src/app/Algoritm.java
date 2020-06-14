@@ -3,8 +3,6 @@ package app;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.management.RuntimeMBeanException;
-
 public class Algoritm {
     public static int time;
 
@@ -34,7 +32,7 @@ public class Algoritm {
         int tam=p.length;
         time=0;
         Arrays.sort(p, new Sortbyarrival());
-        int j=0, h=0, w=0;
+        int j=0, h=0;
         Arrays.sort(p, new Sortbyarrival());
         Log log=new Log(tam);
         
