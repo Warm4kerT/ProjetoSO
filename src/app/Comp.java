@@ -21,7 +21,7 @@ public class Comp{
                     
                 break;
                 case "T":
-                    
+                    System.out.println("Finished prg\n");
                 break;
 
             }

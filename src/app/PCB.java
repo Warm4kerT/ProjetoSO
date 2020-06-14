@@ -109,7 +109,24 @@ public class PCB{
     public void setWaitingTime(int waitingTime) {
         this.waitingTime = waitingTime;
     }
+
+    @Override
+    public PCB clone(){
+        PCB clone=new PCB();
+        clone.setArrivalTime(this.getArrivalTime());
+        clone.setBurstTime(this.getBurstTime());
+        clone.setWaitingTime(this.getWaitingTime());
+        clone.setNome(this.getNome());
+        clone.setPC(this.getPC());
+        clone.setPid(this.getPid());
+        clone.setPpid(this.getPpid());
+        clone.setPriority(this.getPriority());
+        clone.setState(this.getState());
+
+        return clone;
+    }
 }
+
 
 class Sortbyarrival implements Comparator<PCB>{
 

@@ -3,6 +3,8 @@ package app;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.management.RuntimeMBeanException;
+
 public class Algoritm {
     public static int time;
 
@@ -31,27 +33,34 @@ public class Algoritm {
     public static void FCFS(PCB[] p){
         int tam=p.length;
         time=0;
-        int j=0;
-
         Arrays.sort(p, new Sortbyarrival());
+        int j=0, h=0, w=0;
+        Arrays.sort(p, new Sortbyarrival());
+        Log log=new Log(tam);
         
-        while(j<tam){
-            if(p[j].getArrivalTime()<=time){
-                ArrayList<Memory> prgmem=fileRW.readMem("input/"+p[j].getNome());
-                p[j].setWaitingTime(time-p[j].getArrivalTime());
+        log.setRunning(p[0]);
 
-                for(Memory memTemp:prgmem){
-                    Comp.compute(memTemp);
-                    //System.out.println(Comp.var);
+        while(log.running!=null){
+            if(log.running.getArrivalTime()<=time){
+                log.ready[h]=p[h].clone();
+                p[h]=null;
+            }
+
+            if(log.running.getArrivalTime()<=time){
+                Memory[] prgmem=convertM(fileRW.readMem("input/"+log.running.getNome()));
+                log.running.setWaitingTime(time-log.running.getArrivalTime());
+                
+                j=log.running.getState();
+                while(j<prgmem.length){
+                    Comp.compute(prgmem[j]);
                     time++;
-                    System.out.println(time);
+                    j++;
                 }
-
-                System.out.println(p[j].getNome()+" Arrival: "+p[j].getArrivalTime()+" Waiting: "+p[j].getWaitingTime());
-                j++;
+                System.out.println(log.toString());
+                time++;
+                h++;
             }else{
                 time++;
-                System.out.println(time);
             }
         }
 
@@ -120,9 +129,9 @@ public class Algoritm {
 
     }
 
-    public static int shortBurst(PCB[] list, int current, int reBurst){
-        for(int i=current; i<list.length; i++){
-            if(list[i].getBurstTime()<reBurst){
+    public static int shortBurst(PCB[] list, int reBurst){
+        for(int i=0; i<list.length; i++){
+            if(list[i].getBurstTime()!=0 && list[i].getBurstTime()<reBurst){
                 return i;
             }
         }
@@ -133,29 +142,38 @@ public class Algoritm {
     public static void SRT(PCB[] p){
         time=0;
         int tam=p.length;
-        int j=0, h=0;
+        int j=0, h=0, i=0, w=0;
         Arrays.sort(p, new Sortbyarrival());
-        PCB[] waiting=new PCB[tam];
+        Log log=new Log(tam);
         
-        while(j<tam){
-            if(p[j].getArrivalTime()<=time){
-                Memory[] prgmen=convertM(fileRW.readMem("input/"+p[j].getNome()));
-                int i=p[j].getState();
-                for(i=0;i<prgmen.length;i++){
-                    Comp.compute(prgmen[i]);
-                    if(j!=tam-1){
-                        if(shortBurst(p, j, p[j].getBurstTime()-i)!=0 && time>=p[shortBurst(p, j, p[j].getBurstTime()-i)].getArrivalTime()){
-                            p[j].setState(i);
-                            p[j].setBurstTime(p[j].getBurstTime()-i);
-                            waiting[j]=p[j];
-                            j=h;
-                        }
-                    }
-                    System.out.println(time);
-                    System.out.println(p[j].getNome());
+        log.setRunning(p[0]);
+
+        while(log.running!=null){
+            if(log.running.getArrivalTime()<=time){
+                log.ready[h]=p[h];
+                p[h]=null;
+            }
+
+            if(log.running.getArrivalTime()<=time){
+                Memory[] prgmem=convertM(fileRW.readMem("input/"+log.running.getNome()));
+                log.running.setWaitingTime(time-log.running.getArrivalTime());
+                
+                j=log.running.getState();
+                while(j<prgmem.length){
+                    Comp.compute(prgmem[j]);
                     time++;
+                    if((i=shortBurst(log.getReady(),log.running.getBurstTime()-j))!=0){
+                        log.running.setState(j+1);
+                        log.waiting[w]=log.running;
+                        log.running=log.ready[i];
+                        w++;
+                        break;
+                    }
                     j++;
                 }
+                System.out.println(log.toString());
+                time++;
+                h++;
             }else{
                 time++;
             }
