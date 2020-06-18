@@ -82,8 +82,7 @@ public class PCB{
 
     @Override
     public String toString() {
-        return "Process Name: " + this.nome + "\nProcess ID: " + this.pid + "\nParent Process ID: " + this.ppid
-                + "\nState: " + this.state + "\n";
+        return "Name: " + this.nome + " ID: " + this.pid + " State: " + this.state + "\n";
     }
 
     public int getBurstTime() {
@@ -127,24 +126,17 @@ public class PCB{
     }
 }
 
-
-class Sortbyarrival implements Comparator<PCB>{
-
-    public int compare(PCB a, PCB b){ 
-        return a.getArrivalTime() - b.getArrivalTime(); 
-    } 
+class arrivalTimeSorter implements Comparator<PCB> {
+    @Override
+    public int compare(PCB o1, PCB o2) {
+        return o1.getArrivalTime() - o2.getArrivalTime();
+    }   
 }
 
-class Sortbyburst implements Comparator<PCB> { 
-    
-    public int compare(PCB a, PCB b){ 
-        return a.getBurstTime() - b.getBurstTime(); 
-    } 
-} 
+class prioritySorter implements Comparator<PCB> {
+    @Override
+    public int compare(PCB o1, PCB o2) {
+        return o1.getPriority() - o2.getPriority();
+    }   
+}
 
-class Sortbypriority implements Comparator<PCB>{ 
-    
-    public int compare(PCB a, PCB b){ 
-        return a.getPriority() - b.getPriority(); 
-    } 
-} 

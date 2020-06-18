@@ -1,42 +1,64 @@
 package app;
 
+import java.util.*;
+
 public class Log {
-    public PCB[] finnished;
-    public PCB[] waiting;
-    public PCB[] ready;
+    public List<PCB> finnished;
+    public List<PCB> waiting;
+    public List<PCB> ready;
     public PCB running;
 
-    public Log(int tam){
-        this.finnished=new PCB[tam];
-        this.finnished[0]=new PCB();
-        this.waiting=new PCB[tam];
-        this.waiting[0]=new PCB();
-        this.ready=new PCB[tam];
-        this.ready[0]=new PCB();
+    public Log(){
+        this.finnished=new ArrayList<PCB>();
+        this.waiting=new ArrayList<PCB>();
+        this.ready=new ArrayList<PCB>();
         this.running=new PCB();
     }
 
-    public PCB[] getFinnished() {
+   
+    @Override
+    public String toString(){
+        String print=":: Current Time: "+ Algoritm.time+"\n";
+        
+        print=print+":: Running Process:\n"+this.running.toString()+"\n\n:: Waiting Processes:\n\n";
+            for(PCB aux:this.waiting){
+                print=print+aux.toString()+"\n";
+        }            
+        print=print+":: Ready to Execute Processes:\n\n";
+            
+        for(PCB aux:this.ready){
+                print=print+aux.toString()+"\n";
+        }
+
+        print=print+":: Ready to Finished Processes:\n\n";
+        for(PCB aux:this.finnished){
+            print=print+aux.toString()+"\n";
+        }
+
+        return print;
+    }
+
+    public List<PCB> getFinnished() {
         return finnished;
     }
 
-    public void setFinnished(PCB[] finnished) {
+    public void setFinnished(List<PCB> finnished) {
         this.finnished = finnished;
     }
 
-    public PCB[] getWaiting() {
+    public List<PCB> getWaiting() {
         return waiting;
     }
 
-    public void setWaiting(PCB[] waiting) {
+    public void setWaiting(List<PCB> waiting) {
         this.waiting = waiting;
     }
 
-    public PCB[] getReady() {
+    public List<PCB> getReady() {
         return ready;
     }
 
-    public void setReady(PCB[] ready) {
+    public void setReady(List<PCB> ready) {
         this.ready = ready;
     }
 
@@ -46,31 +68,5 @@ public class Log {
 
     public void setRunning(PCB running) {
         this.running = running;
-    }
-
-    @Override
-    public String toString(){
-        String print="Current Time: "+ Algoritm.time+"\n";
-        
-        print=print+"Running Process:\n"+this.running.toString()+"\nWaiting Processes:\n";
-        if(this.waiting[0]!=new PCB()){
-            for(int i=0; i<this.waiting.length;i++){
-                print=print+this.waiting[i].toString()+"\n";
-            }
-        }
-        if(this.ready!=null){
-            print=print+"Ready to Execute Processes:\n";
-            for(int i=0; i<this.ready.length;i++){
-                print=print+this.ready[i].toString()+"\n";
-            }
-        }  
-        if(this.finnished!=null){
-            print=print+"Ready to Finished Processes:\n";
-            for(int i=0; i<this.finnished.length;i++){
-                print=print+this.finnished[i].toString()+"\n";
-            }
-        }
-
-        return print;
     }
 }

@@ -1,7 +1,6 @@
 package app;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class Algoritm {
     public static int time;
@@ -17,57 +16,65 @@ public class Algoritm {
         return output;
     }
 
-    public static Memory[] convertM(ArrayList<Memory> array){
-        Memory[] output=new Memory[array.size()];
-        int i=0;
+    public static List<Memory> convertM(ArrayList<Memory> array){
+        List<Memory> output=new ArrayList<Memory>();
         for(Memory aux:array){
-            output[i]=aux;
-            i++;
+            output.add(aux);
         }
         
         return output;
     }
 
-    public static void FCFS(PCB[] p){
-        int tam=p.length;
-        time=0;
-        Arrays.sort(p, new Sortbyarrival());
-        int j=0, h=0;
-        Arrays.sort(p, new Sortbyarrival());
-        Log log=new Log(tam);
-        
-        log.setRunning(p[0]);
+    public static boolean exist(List<PCB> list, PCB p){
+        for(PCB aux:list){
+            if(aux.equals(p)){
+            return true;
+            }
+        }
 
-        while(log.running!=null){
-            if(log.running.getArrivalTime()<=time){
-                log.ready[h]=p[h].clone();
-                p[h]=null;
+        return false;
+    }
+
+    public static void FCFS(ArrayList<PCB> p){
+        Collections.sort(p, new arrivalTimeSorter());
+        int tam=p.size();
+        time=0;
+        int h=0;
+        Log log=new Log();
+    
+        while(log.finnished.size()!=tam){
+            if(p.get(0).getArrivalTime()<=time && !exist(log.getReady(), p.get(0))){
+                log.ready.add(p.get(0));
+                p.remove(0);
             }
 
             if(log.running.getArrivalTime()<=time){
-                Memory[] prgmem=convertM(fileRW.readMem("input/"+log.running.getNome()));
+                List<Memory> prgmem=convertM(fileRW.readMem("input/"+log.running.getNome()));
                 log.running.setWaitingTime(time-log.running.getArrivalTime());
-                
-                j=log.running.getState();
-                while(j<prgmem.length){
-                    Comp.compute(prgmem[j]);
+                h=0;
+                for(Memory aux:prgmem){
+                    Comp.compute(aux);
                     time++;
-                    j++;
+                    h++;
+                    log.running.setState(h);
                 }
                 System.out.println(log.toString());
                 time++;
-                h++;
+                
+                log.finnished.add(log.running);
+                log.running=log.ready.get(0).clone();
+                log.ready.remove(0);
             }else{
                 time++;
             }
         }
 
         int[] waitingTime=new int[tam]; waitingTime[0]=0;
-        int[] turnAround=new int[tam]; turnAround[0]=p[0].getBurstTime();
+        int[] turnAround=new int[tam]; turnAround[0]=log.finnished.get(0).getBurstTime();
 
         for (int i=1; i<tam; i++){
-            waitingTime[i] = p[i-1].getBurstTime() + waitingTime[i-1] - p[i].getArrivalTime();
-            turnAround[i] = waitingTime[i] + p[i].getBurstTime();
+            waitingTime[i] = log.finnished.get(i-1).getBurstTime() + waitingTime[i-1] - log.finnished.get(i).getArrivalTime();
+            turnAround[i] = waitingTime[i] + log.finnished.get(i).getBurstTime();
         }
 
         int totalW = 0, totalT = 0;
@@ -79,136 +86,46 @@ public class Algoritm {
         System.out.print("Average waiting time is " + totalW/tam + "\n" + "Average turn around time is " + totalT/tam + "\n");
     }
 
-    public static void SJF(PCB[] p){
-        int tam=p.length;
-        int j=0;
-        Arrays.sort(p, new Sortbyburst());
-        PCB running=new PCB();
-        
-        while(j<tam){
-            if(p[j].getArrivalTime()<=time){
-                running=p[j];
-                ArrayList<Memory> prgmem=fileRW.readMem("input/"+running.getNome());
-                running.setWaitingTime(time-running.getArrivalTime());
-
-                for(Memory memTemp:prgmem){
-                    Comp.compute(memTemp);
-                    //System.out.println(Comp.var);
-                    time++;
-                    System.out.println(time);
-                }
-
-                System.out.println(running.getNome()+" Arrival: "+running.getArrivalTime()+" Waiting: "+running.getWaitingTime());
-                j++;
-            }else{
-                time++;
-                System.out.println(time);
-            }
-        }
-        
-        int[] waitingTime = new int[tam];
-        int[] turnAround = new int[tam];
-        waitingTime[0] = 0;
-        turnAround[0] = p[0].getBurstTime();
-
-        for (int i = 1; i < tam; i++){
-            waitingTime[i] = p[i-1].getBurstTime() + waitingTime[i-1];
-            turnAround[i] = waitingTime[i] + p[i].getBurstTime();
-        }
-
-        int totalW = 0; int totalT = 0;
-        
-        for (int i = 0; i < tam; i++){
-            totalW += waitingTime[i];
-            totalT += turnAround[i];
-        }
-        
-        System.out.print("Average waiting time is " + totalW/tam + "\n" + "Average turn around time is " + totalT/tam + "\n");
-
-    }
-
-    public static int shortBurst(PCB[] list, int reBurst){
-        for(int i=0; i<list.length; i++){
-            if(list[i].getBurstTime()!=0 && list[i].getBurstTime()<reBurst){
-                return i;
-            }
-        }
-
-        return 0;
-    }
-    
-    public static void SRT(PCB[] p){
+    public static void Priority(ArrayList<PCB> p){
+        Collections.sort(p, new prioritySorter());
+        int tam=p.size();
         time=0;
-        int tam=p.length;
-        int j=0, h=0, i=0, w=0;
-        Arrays.sort(p, new Sortbyarrival());
-        Log log=new Log(tam);
-        
-        log.setRunning(p[0]);
-
-        while(log.running!=null){
-            if(log.running.getArrivalTime()<=time){
-                log.ready[h]=p[h];
-                p[h]=null;
+        int h=0;
+        Log log=new Log();
+    
+        while(log.finnished.size()!=tam){
+            if(p.get(0).getArrivalTime()<=time && !exist(log.getReady(), p.get(0))){
+                log.ready.add(p.get(0));
+                p.remove(0);
             }
 
             if(log.running.getArrivalTime()<=time){
-                Memory[] prgmem=convertM(fileRW.readMem("input/"+log.running.getNome()));
+                List<Memory> prgmem=convertM(fileRW.readMem("input/"+log.running.getNome()));
                 log.running.setWaitingTime(time-log.running.getArrivalTime());
-                
-                j=log.running.getState();
-                while(j<prgmem.length){
-                    Comp.compute(prgmem[j]);
+                h=0;
+                for(Memory aux:prgmem){
+                    Comp.compute(aux);
                     time++;
-                    if((i=shortBurst(log.getReady(),log.running.getBurstTime()-j))!=0){
-                        log.running.setState(j+1);
-                        log.waiting[w]=log.running;
-                        log.running=log.ready[i];
-                        w++;
-                        break;
-                    }
-                    j++;
+                    h++;
+                    log.running.setState(h);
                 }
                 System.out.println(log.toString());
                 time++;
-                h++;
+                
+                log.finnished.add(log.running);
+                log.running=log.ready.get(0).clone();
+                log.ready.remove(0);
             }else{
                 time++;
-            }
-        }
-    }
-
-    public static void Priority(PCB[] p){
-        int tam=p.length;
-        int j=0;
-        Arrays.sort(p, new Sortbypriority());
-        
-        while(j<tam){
-            if(p[j].getArrivalTime()<=time){
-                ArrayList<Memory> prgmem=fileRW.readMem("input/"+p[j].getNome());
-                p[j].setWaitingTime(time-p[j].getArrivalTime());
-
-                for(Memory memTemp:prgmem){
-                    Comp.compute(memTemp);
-                    //System.out.println(Comp.var);
-                    time++;
-                    System.out.println(time);
-                }
-
-                System.out.println(p[j].getNome()+" Arrival: "+p[j].getArrivalTime()+" Waiting: "+p[j].getWaitingTime());
-                j++;
-            }else{
-                time++;
-                System.out.println(time);
             }
         }
 
         int[] waitingTime=new int[tam]; waitingTime[0]=0;
-        int[] turnAround=new int[tam]; turnAround[0]=p[0].getBurstTime();
+        int[] turnAround=new int[tam]; turnAround[0]=log.finnished.get(0).getBurstTime();
 
         for (int i=1; i<tam; i++){
-            waitingTime[i] = p[i-1].getBurstTime() + waitingTime[i-1];
-            turnAround[i] = waitingTime[i] + p[i].getBurstTime();
+            waitingTime[i] = log.finnished.get(i-1).getBurstTime() + waitingTime[i-1] - log.finnished.get(i).getArrivalTime();
+            turnAround[i] = waitingTime[i] + log.finnished.get(i).getBurstTime();
         }
 
         int totalW = 0, totalT = 0;
