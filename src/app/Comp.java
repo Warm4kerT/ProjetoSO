@@ -1,5 +1,7 @@
 package app;
 
+import java.util.*;
+
 public class Comp{
     public static int var;
 
@@ -15,10 +17,9 @@ public class Comp{
                     var-=instruc.getN();
                 break;
                 case "C":
-                
                 break;
                 case "L":
-                    
+                    cicleComp(instruc.getNome());
                 break;
                 case "T":
                     System.out.println("Finished prg\n");
@@ -26,4 +27,12 @@ public class Comp{
 
             }
         }
+
+    public static void cicleComp(String path){
+        List<Memory> prgmem=Algoritm.convertM(fileRW.readMem("input/"+path+".prg"));
+        
+        for(Memory aux:prgmem){
+            Comp.compute(aux);
+        }
+    }
 }

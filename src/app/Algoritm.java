@@ -39,13 +39,15 @@ public class Algoritm {
         Collections.sort(p, new arrivalTimeSorter());
         int tam=p.size();
         time=0;
-        int h=0;
+        int h=0,pid=0;
         Log log=new Log();
     
         while(log.finnished.size()!=tam){
             if(p.get(0).getArrivalTime()<=time && !exist(log.getReady(), p.get(0))){
+                p.get(0).setPid(pid);
                 log.ready.add(p.get(0));
                 p.remove(0);
+                pid++;
             }
 
             if(log.running.getArrivalTime()<=time){
@@ -90,13 +92,15 @@ public class Algoritm {
         Collections.sort(p, new prioritySorter());
         int tam=p.size();
         time=0;
-        int h=0;
+        int h=0,pid=0;
         Log log=new Log();
     
         while(log.finnished.size()!=tam){
             if(p.get(0).getArrivalTime()<=time && !exist(log.getReady(), p.get(0))){
+                p.get(0).setPid(pid);
                 log.ready.add(p.get(0));
                 p.remove(0);
+                pid++;
             }
 
             if(log.running.getArrivalTime()<=time){
