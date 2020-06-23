@@ -5,17 +5,6 @@ import java.util.*;
 public class Algoritm {
     public static int time;
 
-    public static PCB[] convertP(ArrayList<PCB> array){
-        PCB[] output=new PCB[array.size()];
-        int i=0;
-        for(PCB aux:array){
-            output[i]=aux;
-            i++;
-        }
-
-        return output;
-    }
-
     public static List<Memory> convertM(ArrayList<Memory> array){
         List<Memory> output=new ArrayList<Memory>();
         for(Memory aux:array){
@@ -41,7 +30,8 @@ public class Algoritm {
         time=0;
         int h=0,pid=0;
         Log log=new Log();
-    
+        log.setRunning(p.get(0).clone());
+
         while(log.finnished.size()!=tam){
             if(p.get(0).getArrivalTime()<=time && !exist(log.getReady(), p.get(0))){
                 p.get(0).setPid(pid);
@@ -64,7 +54,7 @@ public class Algoritm {
                 time++;
                 
                 log.finnished.add(log.running);
-                log.running=log.ready.get(0).clone();
+                log.setRunning(log.ready.get(0).clone());
                 log.ready.remove(0);
             }else{
                 time++;
@@ -94,6 +84,7 @@ public class Algoritm {
         time=0;
         int h=0,pid=0;
         Log log=new Log();
+        log.setRunning(p.get(0).clone());
     
         while(log.finnished.size()!=tam){
             if(p.get(0).getArrivalTime()<=time && !exist(log.getReady(), p.get(0))){

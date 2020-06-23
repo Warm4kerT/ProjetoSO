@@ -16,7 +16,7 @@ public class App {
         int input=0;
         while(input!=10){
             System.out.println(":: Menu ::");
-            System.out.println("1- FCFS\n2- SJF\n3- SRT\n4- Priority\n\n10-Exit");
+            System.out.println("1- FCFS\n2- Priority\n\n10-Exit");
             input=read.aInt();
             switch(input){
                 case 1:

@@ -33,6 +33,7 @@ public class Comp{
         
         for(Memory aux:prgmem){
             Comp.compute(aux);
+            Algoritm.time++;
         }
     }
 }
