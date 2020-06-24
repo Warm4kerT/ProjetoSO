@@ -7,11 +7,8 @@ public class App {
 
     public static void main(String[] args){
         System.out.println(": : : Simulador de Gestão de Processos, Escalonamento e Gestão de Memória : : :");
-        ArrayList<PCB> PcbTabela=new ArrayList<>();
         
         String plan="input/plan.txt";
-        PcbTabela=fileRW.readPCB(plan);
-        ArrayList<PCB> save=PcbTabela;
         System.out.println("\nReading from: "+plan+"\n");
         
         int input=0;
@@ -22,14 +19,12 @@ public class App {
             switch(input){
                 case 1:
                     System.out.println(":: FCFS ::");
-                    Algoritm.FCFS(PcbTabela);
-                    PcbTabela=save;
+                    Algoritm.FCFS(fileRW.readPCB(plan));
                     System.out.println(":: End ::\n");
                 break;
                 case 2:
                     System.out.println(":: Priority ::");
-                    Algoritm.Priority(PcbTabela);
-                    PcbTabela=save;
+                    Algoritm.Priority(fileRW.readPCB(plan));
                     System.out.println(":: End ::\n");
                 break;
             }
