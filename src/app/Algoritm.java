@@ -50,14 +50,14 @@ public class Algoritm {
                     h++;
                     log.running.setState(h);
                 }
-                System.out.println(log.toString());
                 time++;
-                
                 log.finnished.add(log.running);
                 log.setRunning(log.ready.get(0).clone());
                 log.ready.remove(0);
+                System.out.println(log.toString());
             }else{
                 time++;
+                System.out.println(log.toString());
             }
         }
 
@@ -104,14 +104,14 @@ public class Algoritm {
                     h++;
                     log.running.setState(h);
                 }
-                System.out.println(log.toString());
                 time++;
-                
                 log.finnished.add(log.running);
                 log.running=log.ready.get(0).clone();
                 log.ready.remove(0);
+                System.out.println(log.toString());
             }else{
                 time++;
+                System.out.println(log.toString());
             }
         }
 
