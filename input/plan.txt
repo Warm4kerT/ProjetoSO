@@ -1,4 +1,4 @@
-progenitor.prg 11 3 18 0 3
-filho1.prg 3 2 5 8 2
-filho2.prg 4 6 4 9 1
-filho1.prg 3 8 5 8 2
+progenitor.prg 11 3 18 3
+filho1.prg 3 2 5 2
+filho2.prg 4 6 4 1
+filho1.prg 3 8 5 2

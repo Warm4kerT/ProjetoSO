@@ -63,7 +63,7 @@ public class fileRW {
                         aux.setArrivalTime(sTi(parts[2]));
                         aux.setPC(pList.size()-1);
                         aux.setBurstTime(sTi(parts[3]));
-                        aux.setPriority(sTi(parts[5]));
+                        aux.setPriority(sTi(parts[4]));
                         pList.add(aux);
                     }
                 }
